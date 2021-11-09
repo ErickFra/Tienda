@@ -1,6 +1,7 @@
 
 package tienda;
 import java.sql.*;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 public class Inicio_Secion extends javax.swing.JFrame {
     
@@ -10,12 +11,14 @@ public class Inicio_Secion extends javax.swing.JFrame {
     public static int id;
     public static String Dnombre;
     public static String Dapellido;
+    private char signo;
     
     public Inicio_Secion() {
         initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        
+        this.setIconImage(new ImageIcon(getClass().getResource("/imagenes/perfil.png")).getImage());
+        signo = contra.getEchoChar();
     }
 
     @SuppressWarnings("unchecked")
@@ -30,8 +33,10 @@ public class Inicio_Secion extends javax.swing.JFrame {
         ingresar = new javax.swing.JButton();
         contra = new javax.swing.JPasswordField();
         regresar = new javax.swing.JButton();
+        mostrar = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Inicio de secion");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -44,6 +49,7 @@ public class Inicio_Secion extends javax.swing.JFrame {
         jLabel3.setText("Contraseña: ");
 
         ingresar.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        ingresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/aceptar.png"))); // NOI18N
         ingresar.setText("Ingresar");
         ingresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -52,10 +58,18 @@ public class Inicio_Secion extends javax.swing.JFrame {
         });
 
         regresar.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/regresar.png"))); // NOI18N
         regresar.setText("Regresar");
         regresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 regresarActionPerformed(evt);
+            }
+        });
+
+        mostrar.setText("Mostrar contraseña.");
+        mostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarActionPerformed(evt);
             }
         });
 
@@ -78,11 +92,15 @@ public class Inicio_Secion extends javax.swing.JFrame {
                         .addGap(0, 72, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
+                .addGap(33, 33, 33)
                 .addComponent(ingresar)
-                .addGap(104, 104, 104)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(regresar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mostrar)
+                .addGap(131, 131, 131))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,10 +115,12 @@ public class Inicio_Secion extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(contra, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(73, 73, 73)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ingresar)
-                    .addComponent(regresar))
+                .addGap(18, 18, 18)
+                .addComponent(mostrar)
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(regresar)
+                    .addComponent(ingresar))
                 .addContainerGap(75, Short.MAX_VALUE))
         );
 
@@ -147,34 +167,45 @@ public class Inicio_Secion extends javax.swing.JFrame {
                         id = rs.getInt(1);
                         Dnombre = rs.getString(2);
                         Dapellido = rs.getString(3);
-                        JOptionPane.showMessageDialog(null, "Dato encontrado...", "ID de cliente: " + rs.getInt(1), 1);
+                        //JOptionPane.showMessageDialog(null, "Dato encontrado...", "ID de cliente: " + rs.getInt(1), 1);
+                        JOptionPane.showMessageDialog(null, "Dato encontrado...", "ID de cliente: " + rs.getInt(1), 1, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
                         Compra_Venta venta = new Compra_Venta();
                         venta.setVisible(true);
                         this.setVisible(false);
                         break;
                     }else if (contador == rs2.getInt("filas")){
-                        JOptionPane.showMessageDialog(null, "Datos incorrectos", "Error", 0);
+                        JOptionPane.showMessageDialog(null, "Datos incorrectos", "Error", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
                     }else{contador++;}   
                 }
                 
                 c.close();
                 
             } catch (Exception e) {
-                System.out.println("Error: "+e);
+                JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
             }
             
         }else{
-            JOptionPane.showMessageDialog(null, "Por favor, llena todo los campos.", "Imcompleto", 2);
+            //JOptionPane.showMessageDialog(null, "Por favor, llena todo los campos.", "Imcompleto", 2);
+            JOptionPane.showMessageDialog(null, "Por favor, llena todo los campos.", "Incompleto", 0, new ImageIcon(getClass().getResource("/imagenes/incompleto.png")));
         }
         
     }//GEN-LAST:event_ingresarActionPerformed
-
+    
     private void regresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarActionPerformed
 
         Inicio inicio = new Inicio();
         inicio.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_regresarActionPerformed
+
+    private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
+        
+        if (mostrar.isSelected()){
+            contra.setEchoChar((char)0);
+        }else{
+            contra.setEchoChar(signo);
+        }
+    }//GEN-LAST:event_mostrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,6 +252,7 @@ public class Inicio_Secion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JCheckBox mostrar;
     private javax.swing.JTextField nombre;
     private javax.swing.JButton regresar;
     // End of variables declaration//GEN-END:variables

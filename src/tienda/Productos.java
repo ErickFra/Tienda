@@ -1,6 +1,7 @@
 
 package tienda;
 import java.sql.*;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,6 +16,7 @@ public class Productos extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.setIconImage(new ImageIcon(getClass().getResource("/imagenes/productos.png")).getImage());
         seleccionar.setVisible(false);
         
         modelo.addColumn("ID");
@@ -54,7 +56,8 @@ public class Productos extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "Error", 2);
+            JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
+            //JOptionPane.showMessageDialog(null, e, "Error", 2, new ImageIcon(getClass().getResource("/imagenes/error.png")));
             
         }
     }
@@ -96,6 +99,7 @@ public class Productos extends javax.swing.JFrame {
         jLabel1.setText("Productos Registrados.");
 
         seleccionar.setFont(new java.awt.Font("Trebuchet MS", 3, 18)); // NOI18N
+        seleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/paloma.png"))); // NOI18N
         seleccionar.setText("SELECCIONAR");
         seleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,7 +173,7 @@ public class Productos extends javax.swing.JFrame {
                 st = c.createStatement();
                 rs = st.executeQuery(sql);
                 int cantidad = Integer.parseInt(JOptionPane.showInputDialog(null, "Cuando productos quieres: ", "Cantidad", 1));
-                //Continuamos aqui
+                // Continuamos aqui.
                 while (rs.next()){
                     
                     Compra_Venta.modelo.addRow(new Object []
@@ -185,7 +189,7 @@ public class Productos extends javax.swing.JFrame {
                 c.close();
             
             } catch (Exception e) {
-                System.out.println(e);
+                JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
             }
             
             

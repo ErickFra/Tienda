@@ -1,20 +1,27 @@
 
 package tienda;
+import java.awt.Image;
 import java.sql.*;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 public class Registro extends javax.swing.JFrame {
 
     Conexion con;
     Encriptar enc;
+    private char signo;
     
     public Registro() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         login.setEnabled(false);
+        this.setIconImage(new ImageIcon(getClass().getResource("/imagenes/registro.png")).getImage());
+        signo = contra1.getEchoChar();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -36,6 +43,7 @@ public class Registro extends javax.swing.JFrame {
         contra2 = new javax.swing.JPasswordField();
         login = new javax.swing.JButton();
         regresar = new javax.swing.JButton();
+        mostrar = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Registro de clientes");
@@ -65,6 +73,7 @@ public class Registro extends javax.swing.JFrame {
         jLabel5.setText("Telefono: ");
 
         registrar.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ok.png"))); // NOI18N
         registrar.setText("Registrar");
         registrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         registrar.addActionListener(new java.awt.event.ActionListener() {
@@ -80,7 +89,9 @@ public class Registro extends javax.swing.JFrame {
         jLabel7.setText("Cofirmar: ");
 
         login.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
-        login.setText("Iniciarl Secion");
+        login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iniciar_sesion.png"))); // NOI18N
+        login.setText("Iniciar Secion");
+        login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginActionPerformed(evt);
@@ -88,10 +99,20 @@ public class Registro extends javax.swing.JFrame {
         });
 
         regresar.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        regresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/regresar.png"))); // NOI18N
         regresar.setText("Regresar");
+        regresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         regresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 regresarActionPerformed(evt);
+            }
+        });
+
+        mostrar.setText("Mostrar Contraseñas");
+        mostrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        mostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mostrarActionPerformed(evt);
             }
         });
 
@@ -113,22 +134,20 @@ public class Registro extends javax.swing.JFrame {
                             .addComponent(jLabel7))
                         .addGap(78, 78, 78)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(contra2)
-                                .addGap(250, 250, 250))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                    .addComponent(apellido)
-                                    .addComponent(mail)
-                                    .addComponent(telefono)
-                                    .addComponent(contra1))
-                                .addGap(73, 73, 73)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(regresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(registrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(34, 34, 34)))))
+                            .addComponent(nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(apellido)
+                            .addComponent(mail)
+                            .addComponent(telefono)
+                            .addComponent(contra1)
+                            .addComponent(contra2))
+                        .addGap(73, 73, 73)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(regresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(registrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(mostrar))
+                        .addGap(34, 34, 34)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -147,14 +166,14 @@ public class Registro extends javax.swing.JFrame {
                             .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(47, 47, 47)
+                        .addComponent(registrar)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(mail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(login))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,7 +186,8 @@ public class Registro extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(contra2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(contra2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mostrar))
                         .addContainerGap(116, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(97, 97, 97)
@@ -181,7 +201,7 @@ public class Registro extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +247,7 @@ public class Registro extends javax.swing.JFrame {
 
                             ppt.executeUpdate();
 
-                            JOptionPane.showMessageDialog(null, "Datos guardados correctamente", "Guardado...", 1);
+                            JOptionPane.showMessageDialog(null, "Datos guardados correctamente", "Guardado...", 1, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
                             
                             login.setEnabled(true);
 
@@ -241,12 +261,12 @@ public class Registro extends javax.swing.JFrame {
 
                         } catch (Exception e) {
 
-                            System.out.println("Eror: " + e);
+                            JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
 
                         }
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "Las contraseñas no son iguales", "Error", 0);
+                JOptionPane.showMessageDialog(null, "Las contraseñas no son iguales", "Error", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
                 /*nombre.setText(null);
                 apellido.setText(null);
                 mail.setText(null);
@@ -256,7 +276,8 @@ public class Registro extends javax.swing.JFrame {
             }
             
         }else{
-            JOptionPane.showMessageDialog(null, "Te falta llenar algun campo", "Error", 2);
+            //JOptionPane.showMessageDialog(null, "Te falta llenar algun campo", "Error", 2);
+            JOptionPane.showMessageDialog(null, "Por favor, llena todo los campos.", "Incompleto", 0, new ImageIcon(getClass().getResource("/imagenes/incompleto.png")));
         }
     }//GEN-LAST:event_registrarActionPerformed
 
@@ -274,6 +295,17 @@ public class Registro extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_regresarActionPerformed
 
+    private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
+
+        if (mostrar.isSelected()){
+            contra1.setEchoChar((char)0);
+            contra2.setEchoChar((char)0);
+        }else{
+            contra1.setEchoChar(signo);
+            contra2.setEchoChar(signo);
+        }
+    }//GEN-LAST:event_mostrarActionPerformed
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -282,7 +314,7 @@ public class Registro extends javax.swing.JFrame {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField apellido;
     private javax.swing.JPasswordField contra1;
@@ -297,6 +329,7 @@ public class Registro extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton login;
     private javax.swing.JTextField mail;
+    private javax.swing.JCheckBox mostrar;
     private javax.swing.JTextField nombre;
     private javax.swing.JButton registrar;
     private javax.swing.JButton regresar;

@@ -1,6 +1,7 @@
 
 package tienda;
 import java.sql.*;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 public class Compra_Venta extends javax.swing.JFrame {
@@ -10,6 +11,7 @@ public class Compra_Venta extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Cliente: " + Inicio_Secion.Dnombre + " " +Inicio_Secion.Dapellido);
         this.setLocationRelativeTo(null);
+        this.setIconImage(new ImageIcon(getClass().getResource("/imagenes/perfil.png")).getImage());
         
         modelo = new DefaultTableModel();
         modelo.addColumn("ID_PRODUCTOS");
@@ -18,7 +20,6 @@ public class Compra_Venta extends javax.swing.JFrame {
         modelo.addColumn("CANTIDAD");
         modelo.addColumn("CARGO");
         jTable1.setModel(modelo);
-        
         
     }
 
@@ -49,6 +50,7 @@ public class Compra_Venta extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         irProductos.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
+        irProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/productos.png"))); // NOI18N
         irProductos.setText("Productos");
         irProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,6 +61,7 @@ public class Compra_Venta extends javax.swing.JFrame {
         total.setFont(new java.awt.Font("Trebuchet MS", 3, 18)); // NOI18N
 
         irCompra.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
+        irCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/comprar.png"))); // NOI18N
         irCompra.setText("Comprar");
         irCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,20 +82,20 @@ public class Compra_Venta extends javax.swing.JFrame {
                 .addComponent(total)
                 .addGap(160, 160, 160))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(39, 39, 39)
                 .addComponent(irProductos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(irCompra)
-                .addGap(109, 109, 109))
+                .addGap(107, 107, 107))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(197, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(irProductos)
-                    .addComponent(irCompra))
-                .addGap(18, 18, 18)
+                .addContainerGap(187, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(irCompra)
+                    .addComponent(irProductos))
+                .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(total)
@@ -118,10 +121,11 @@ public class Compra_Venta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void irProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irProductosActionPerformed
-
+        
         Productos productos = new Productos();
         Productos.seleccionar.setVisible(true);
         productos.setVisible(true);
+        
     }//GEN-LAST:event_irProductosActionPerformed
 
     private void irCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irCompraActionPerformed
@@ -141,8 +145,8 @@ public class Compra_Venta extends javax.swing.JFrame {
             
             String sql = "SELECT * FROM registro WHERE id = " + Inicio_Secion.id +"";
             String sql2 = "INSERT INTO compra_venta (id_registro, total, fecha) VALUES (?, ?, DATETIME('now', 'localtime'))";
-            //String sql3 = "UPDATE productos set cantidad = cantidad - (?) WHERE id = ?";
             
+            Generar_Recibo recibo = new Generar_Recibo(jTable1, Inicio_Secion.id, Productos.suma);
             try {
                 
                 con = new Conexion();
@@ -153,10 +157,11 @@ public class Compra_Venta extends javax.swing.JFrame {
                 ppt.setFloat(2, (float) Productos.suma);
                 
                 ppt.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Compra exitosa", "Procesando...", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Compra exitosa", "Procesando...", 1, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
                 c.close();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e, "Error al registrar", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
+                //JOptionPane.showMessageDialog(null, e, "Error al registrar", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
             }
             // ENVIO DEL CORREO. 
             
@@ -169,15 +174,16 @@ public class Compra_Venta extends javax.swing.JFrame {
 
                 String mail = rs.getString(4);
 
-                correo = new Correo(mail, "Tus productos estan listo.\nPor favor, pase a la caja.\nSerian: $" + Productos.suma);
-                correo.enviar();
+                correo = new Correo(mail, "Tus productos estan listo.\nPor favor, pase a la caja.\nSerian: $" + Productos.suma, "Compra de productos");
+                //correo.enviar();
+                correo.enviar("documento"+Inicio_Secion.id+".txt");
                 
                 rs.close();
                 st.close();
                 c.close();
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e, "Error al enviar el correo", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e, "Error al enviar el correo", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
             }
             
             // ACTUALIZACION DE LOS DATOS.
@@ -192,11 +198,12 @@ public class Compra_Venta extends javax.swing.JFrame {
                 c.close();
                 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e, "Error al actulizar productos", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e, "Error al actulizar productos", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
         }
             //Inicio inicio = new Inicio();
             //inicio.setVisible(true);
             //this.setVisible(false);
+            recibo.eliminarArchivo();
         
         }else{
             total.setText(null);

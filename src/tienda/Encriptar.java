@@ -6,6 +6,8 @@ import java.util.Arrays;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 
 public class Encriptar {
@@ -54,7 +56,7 @@ public class Encriptar {
             return cad_desencrip;
             
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, e, "Error al conectar con la Base de datos", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
             return "";
         }
     }

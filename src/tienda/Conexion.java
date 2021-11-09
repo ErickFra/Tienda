@@ -1,6 +1,8 @@
 
 package tienda;
 import java.sql.*;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class Conexion {
     
@@ -13,7 +15,8 @@ public class Conexion {
             Class.forName("org.sqlite.JDBC");
             con = DriverManager.getConnection(url);
         } catch (Exception e) {
-            System.out.println(e);
+            
+            JOptionPane.showMessageDialog(null, e, "Error al conectar con la Base de datos", 0, new ImageIcon(getClass().getResource("/imagenes/errorBD.png")));
         }
        
     }
