@@ -18,20 +18,20 @@ public class Generar_Recibo {
             archivo = new File("documento"+id+".txt");
             escribir = new FileWriter(archivo);
             
-            escribir.write("\t ------------ Productos ------------".toUpperCase() + "\n\n");
-            escribir.write("****************************************************\n\n");
+            escribir.write("\t\t\t\t ------------ Productos ------------".toUpperCase() + "\n\n");
+            escribir.write("\t ****************************************************\n\n");
             for (int i = 0; i < tabla.getRowCount(); i++){
-                escribir.write(tabla.getValueAt(i, 1).toString() + "(");
+                escribir.write("\t " + tabla.getValueAt(i, 1).toString() + "(");
                 escribir.write(tabla.getValueAt(i, 2).toString() + ") * ");
                 escribir.write(tabla.getValueAt(i, 3).toString() + " ---> ");
                 escribir.write(tabla.getValueAt(i, 4).toString());
                 escribir.write("\n\n");
             }
             escribir.write("\t\t Total: $" + total + "\n\n");
-            escribir.write("****************************************************\n\n");
-            escribir.write("****************************************************\n\n");
+            escribir.write("\t ****************************************************\n\n");
+            escribir.write("\t ****************************************************\n\n");
             escribir.write("\t\t Gracias por su compra".toUpperCase()+"\n\n");
-            escribir.write("****************************************************\n");
+            escribir.write("\t ****************************************************\n");
                         
             escribir.close();
         } catch (IOException ex) {

@@ -1,5 +1,6 @@
 
 package tienda;
+import com.sun.glass.events.KeyEvent;
 import java.sql.*;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -44,6 +45,12 @@ public class Inicio_Secion extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Verdana", 3, 18)); // NOI18N
         jLabel2.setText("Nombre: ");
+
+        nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nombreKeyTyped(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Verdana", 3, 18)); // NOI18N
         jLabel3.setText("Contraseña: ");
@@ -206,6 +213,14 @@ public class Inicio_Secion extends javax.swing.JFrame {
             contra.setEchoChar(signo);
         }
     }//GEN-LAST:event_mostrarActionPerformed
+
+    private void nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyTyped
+
+        if (!Character.isLetter(evt.getKeyChar()) && !(evt.getKeyChar() == KeyEvent.VK_SPACE) && !(evt.getKeyChar() == KeyEvent.VK_BACKSPACE) && !(evt.getKeyChar() == KeyEvent.VK_ENTER)){
+            JOptionPane.showMessageDialog(null, "Por favor, solo letras", "Error...", 0, new ImageIcon(getClass().getResource("/imagenes/letras.png")));
+            evt.consume();
+        }
+    }//GEN-LAST:event_nombreKeyTyped
 
     /**
      * @param args the command line arguments

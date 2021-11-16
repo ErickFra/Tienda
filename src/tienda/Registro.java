@@ -1,7 +1,10 @@
 
 package tienda;
+import com.sun.glass.events.KeyEvent;
 import java.awt.Image;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,6 +23,8 @@ public class Registro extends javax.swing.JFrame {
         login.setEnabled(false);
         this.setIconImage(new ImageIcon(getClass().getResource("/imagenes/registro.png")).getImage());
         signo = contra1.getEchoChar();
+        actualizar.setVisible(false);
+        
     }
     
     @SuppressWarnings("unchecked")
@@ -44,6 +49,7 @@ public class Registro extends javax.swing.JFrame {
         login = new javax.swing.JButton();
         regresar = new javax.swing.JButton();
         mostrar = new javax.swing.JCheckBox();
+        actualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Registro de clientes");
@@ -71,6 +77,24 @@ public class Registro extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Verdana", 3, 18)); // NOI18N
         jLabel5.setText("Telefono: ");
+
+        nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nombreKeyTyped(evt);
+            }
+        });
+
+        apellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                apellidoKeyTyped(evt);
+            }
+        });
+
+        telefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                telefonoKeyTyped(evt);
+            }
+        });
 
         registrar.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/ok.png"))); // NOI18N
@@ -116,6 +140,15 @@ public class Registro extends javax.swing.JFrame {
             }
         });
 
+        actualizar.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        actualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/actualizar.png"))); // NOI18N
+        actualizar.setText("Actualizar");
+        actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                actualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -134,20 +167,24 @@ public class Registro extends javax.swing.JFrame {
                             .addComponent(jLabel7))
                         .addGap(78, 78, 78)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(apellido)
-                            .addComponent(mail)
-                            .addComponent(telefono)
-                            .addComponent(contra1)
-                            .addComponent(contra2))
-                        .addGap(73, 73, 73)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(regresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(registrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(mostrar))
-                        .addGap(34, 34, 34)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(mostrar)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                    .addComponent(apellido)
+                                    .addComponent(mail)
+                                    .addComponent(telefono)
+                                    .addComponent(contra1)
+                                    .addComponent(contra2))
+                                .addGap(73, 73, 73)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(regresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(registrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(actualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(34, 34, 34)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -173,9 +210,14 @@ public class Registro extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(mail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(login))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(login)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -186,13 +228,14 @@ public class Registro extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(contra2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(mostrar))
-                        .addContainerGap(116, Short.MAX_VALUE))
+                            .addComponent(contra2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
                         .addComponent(regresar)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(35, 35, 35)
+                        .addComponent(actualizar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(mostrar)
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -227,42 +270,37 @@ public class Registro extends javax.swing.JFrame {
                 if (res == 0){
 
                     String sql = "INSERT INTO registro (nombre, apellido, correo, telefono, password) VALUES (?, ?, ?, ?, ?)";
-                        //String sql = "INSERT INTO registro (nombre, apellido, correo, telefono) VALUES ('"+nombre.getText()+"', '"+apellido.getText()+"', '"+mail.getText()+"', '"+telefono.getText()+"')";
-                        //String sql = "INSERT INTO registro (nombre, apellido, correo, telefono) VALUES ("+nombre.getText()+", "+apellido.getText()+", "+mail.getText()+", "+telefono.getText()+")";
+                        
+                    Connection c;
+                    PreparedStatement ppt;
 
-                        Connection c;
-                        PreparedStatement ppt;
+                    try {
+                        c = con.getConexion();
 
-                        try {
-                            c = con.getConexion();
+                        ppt = c.prepareStatement(sql);
 
-                            ppt = c.prepareStatement(sql);
+                        ppt.setString(1, nombre.getText());
+                        ppt.setString(2, apellido.getText());
+                        ppt.setString(3, mail.getText());
+                        ppt.setString(4, telefono.getText());
+                        ppt.setString(5, enc.encriptar(contra1.getText()));
 
+                        ppt.executeUpdate();
 
-                            ppt.setString(1, nombre.getText());
-                            ppt.setString(2, apellido.getText());
-                            ppt.setString(3, mail.getText());
-                            ppt.setString(4, telefono.getText());
-                            ppt.setString(5, enc.encriptar(contra1.getText()));
-
-                            ppt.executeUpdate();
-
-                            JOptionPane.showMessageDialog(null, "Datos guardados correctamente", "Guardado...", 1, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
+                        JOptionPane.showMessageDialog(null, "Datos guardados correctamente", "Guardado...", 1, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
                             
-                            login.setEnabled(true);
+                        login.setEnabled(true);
 
-                            nombre.setText(null);
-                            apellido.setText(null);
-                            mail.setText(null);
-                            telefono.setText(null);
-                            contra1.setText(null);
-                            contra2.setText(null);
+                        nombre.setText(null);
+                        apellido.setText(null);
+                        mail.setText(null);
+                        telefono.setText(null);
+                        contra1.setText(null);
+                        contra2.setText(null);
 
-
-                        } catch (Exception e) {
+                    } catch (Exception e) {
 
                             JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
-
                         }
                 }
             }else{
@@ -306,6 +344,91 @@ public class Registro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mostrarActionPerformed
 
+    private void nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyTyped
+
+        if (!Character.isLetter(evt.getKeyChar()) && !(evt.getKeyChar() == KeyEvent.VK_SPACE) && !(evt.getKeyChar() == KeyEvent.VK_BACKSPACE) && !(evt.getKeyChar() == KeyEvent.VK_ENTER)){
+            JOptionPane.showMessageDialog(null, "Por favor, solo letras", "Error...", 0, new ImageIcon(getClass().getResource("/imagenes/letras.png")));
+            System.out.println(KeyEvent.VK_DELETE);
+            evt.consume();
+        }
+    }//GEN-LAST:event_nombreKeyTyped
+
+    private void apellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apellidoKeyTyped
+
+        if (!Character.isLetter(evt.getKeyChar()) && !(evt.getKeyChar() == KeyEvent.VK_SPACE) && !(evt.getKeyChar() == KeyEvent.VK_BACKSPACE) && !(evt.getKeyChar() == KeyEvent.VK_ENTER)){
+            JOptionPane.showMessageDialog(null, "Por favor, solo letras", "Error...", 0, new ImageIcon(getClass().getResource("/imagenes/letras.png")));
+            evt.consume();
+        }
+    }//GEN-LAST:event_apellidoKeyTyped
+
+    private void telefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telefonoKeyTyped
+        
+        if (evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9' || (evt.getKeyChar() == KeyEvent.VK_BACKSPACE || evt.getKeyChar() == KeyEvent.VK_ENTER)){
+        }else{
+            JOptionPane.showMessageDialog(null, "Por favor, solo numeros", "Error...", 0, new ImageIcon(getClass().getResource("/imagenes/numeros.png")));
+            evt.consume();
+        }
+        
+    }//GEN-LAST:event_telefonoKeyTyped
+
+    private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
+
+        
+        if (nombre.getText().length() != 0 && apellido.getText().length() != 0 && mail.getText().length() != 0 && telefono.getText().length() != 0 && contra1.getText().length() != 0 && contra2.getText().length() != 0){
+            
+            Conexion con;
+            Encriptar enc;
+            if (contra1.getText().equals(contra2.getText())){
+                
+                con = new Conexion();
+                enc = new Encriptar();
+                int res = JOptionPane.showConfirmDialog(null, "¿Los datos son correctos?");
+            
+                if (res == 0){
+                    String sql = "UPDATE registro SET nombre = '"+nombre.getText()+"', apellido = '"+apellido.getText()+"', correo = '"+mail.getText()+"', telefono = '"+telefono.getText()+"', password = '"+enc.encriptar(contra1.getText())+"' WHERE id = "+Inicio_Secion.id+" ";
+                    
+                    Connection c;
+                    PreparedStatement pps;
+
+                    try {
+                        c = con.getConexion();
+                        pps = c.prepareStatement(sql);
+                        pps.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Datos Actualizados", "Actualizacion", 0, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
+                        login.setVisible(true);
+                        login.setEnabled(true);
+                            
+                        login.setEnabled(true);
+
+                        nombre.setText(null);
+                        apellido.setText(null);
+                        mail.setText(null);
+                        telefono.setText(null);
+                        contra1.setText(null);
+                        contra2.setText(null);
+
+                    } catch (Exception e) {
+                        
+                        JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Las contraseñas no son iguales", "Error", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
+                /*nombre.setText(null);
+                apellido.setText(null);
+                mail.setText(null);
+                telefono.setText(null);*/
+                contra1.setText(null);
+                contra2.setText(null);
+            }
+            
+        }else{
+            //JOptionPane.showMessageDialog(null, "Te falta llenar algun campo", "Error", 2);
+            JOptionPane.showMessageDialog(null, "Por favor, llena todo los campos.", "Incompleto", 0, new ImageIcon(getClass().getResource("/imagenes/incompleto.png")));
+        }
+    
+    }//GEN-LAST:event_actualizarActionPerformed
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -316,9 +439,10 @@ public class Registro extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField apellido;
-    private javax.swing.JPasswordField contra1;
-    private javax.swing.JPasswordField contra2;
+    public static javax.swing.JButton actualizar;
+    public static javax.swing.JTextField apellido;
+    public static javax.swing.JPasswordField contra1;
+    public static javax.swing.JPasswordField contra2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -327,12 +451,12 @@ public class Registro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton login;
-    private javax.swing.JTextField mail;
+    public static javax.swing.JButton login;
+    public static javax.swing.JTextField mail;
     private javax.swing.JCheckBox mostrar;
-    private javax.swing.JTextField nombre;
-    private javax.swing.JButton registrar;
-    private javax.swing.JButton regresar;
-    private javax.swing.JTextField telefono;
+    public static javax.swing.JTextField nombre;
+    public static javax.swing.JButton registrar;
+    public static javax.swing.JButton regresar;
+    public static javax.swing.JTextField telefono;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,8 @@
 
 package tienda;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -11,6 +13,7 @@ public class Compra_Venta extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Cliente: " + Inicio_Secion.Dnombre + " " +Inicio_Secion.Dapellido);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
         this.setIconImage(new ImageIcon(getClass().getResource("/imagenes/perfil.png")).getImage());
         
         modelo = new DefaultTableModel();
@@ -19,7 +22,7 @@ public class Compra_Venta extends javax.swing.JFrame {
         modelo.addColumn("PRECIO");
         modelo.addColumn("CANTIDAD");
         modelo.addColumn("CARGO");
-        jTable1.setModel(modelo);
+        compras.setModel(modelo);
         
     }
 
@@ -29,14 +32,25 @@ public class Compra_Venta extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        compras = new javax.swing.JTable();
         irProductos = new javax.swing.JButton();
         total = new javax.swing.JLabel();
         irCompra = new javax.swing.JButton();
+        salir = new javax.swing.JButton();
+        eliminar = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        compras = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        compras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -47,7 +61,7 @@ public class Compra_Venta extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(compras);
 
         irProductos.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
         irProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/productos.png"))); // NOI18N
@@ -69,32 +83,56 @@ public class Compra_Venta extends javax.swing.JFrame {
             }
         });
 
+        salir.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
+        salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salir.png"))); // NOI18N
+        salir.setText("Salir");
+        salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirActionPerformed(evt);
+            }
+        });
+
+        eliminar.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
+        eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/eliminar.png"))); // NOI18N
+        eliminar.setText("Eliminar");
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(148, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(total)
                 .addGap(160, 160, 160))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addComponent(irProductos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(irCompra)
-                .addGap(107, 107, 107))
+                .addGap(43, 43, 43)
+                .addComponent(eliminar)
+                .addGap(42, 42, 42)
+                .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(110, 110, 110)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(187, Short.MAX_VALUE)
+                .addContainerGap(197, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(irCompra)
-                    .addComponent(irProductos))
+                    .addComponent(irProductos)
+                    .addComponent(salir)
+                    .addComponent(eliminar))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
@@ -102,13 +140,35 @@ public class Compra_Venta extends javax.swing.JFrame {
                 .addGap(30, 30, 30))
         );
 
+        jMenu1.setText("Cuenta");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setText("Compras");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setText("Actualizar Datos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,7 +206,7 @@ public class Compra_Venta extends javax.swing.JFrame {
             String sql = "SELECT * FROM registro WHERE id = " + Inicio_Secion.id +"";
             String sql2 = "INSERT INTO compra_venta (id_registro, total, fecha) VALUES (?, ?, DATETIME('now', 'localtime'))";
             
-            Generar_Recibo recibo = new Generar_Recibo(jTable1, Inicio_Secion.id, Productos.suma);
+            Generar_Recibo recibo = new Generar_Recibo(compras, Inicio_Secion.id, Productos.suma);
             try {
                 
                 con = new Conexion();
@@ -163,8 +223,8 @@ public class Compra_Venta extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
                 //JOptionPane.showMessageDialog(null, e, "Error al registrar", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
             }
-            // ENVIO DEL CORREO. 
             
+            // ENVIO DEL CORREO. 
             try {
                 con = new Conexion();
                 c = con.getConexion();
@@ -191,8 +251,8 @@ public class Compra_Venta extends javax.swing.JFrame {
                 con = new Conexion();
                 c = con.getConexion();
                 
-                for (int i = 0; i < jTable1.getRowCount(); i++){
-                    ppt = c.prepareStatement("UPDATE productos SET cantidad = cantidad - " + jTable1.getValueAt(i, 3) + " WHERE id = "+jTable1.getValueAt(i, 0)+" ");
+                for (int i = 0; i < compras.getRowCount(); i++){
+                    ppt = c.prepareStatement("UPDATE productos SET cantidad = cantidad - " + compras.getValueAt(i, 3) + " WHERE id = "+compras.getValueAt(i, 0)+" ");
                     ppt.executeUpdate();
                 }
                 c.close();
@@ -203,6 +263,11 @@ public class Compra_Venta extends javax.swing.JFrame {
             //Inicio inicio = new Inicio();
             //inicio.setVisible(true);
             //this.setVisible(false);
+            
+            for (int k = 0; k < compras.getRowCount(); k++){
+                this.modelo.removeRow(0);
+            }
+            total.setText("");
             recibo.eliminarArchivo();
         
         }else{
@@ -210,8 +275,82 @@ public class Compra_Venta extends javax.swing.JFrame {
         }
         
         
-        
     }//GEN-LAST:event_irCompraActionPerformed
+
+    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
+
+        int opc = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres salir?", "Salir", JOptionPane.YES_NO_OPTION);
+        if (opc == 0){
+            Inicio inicio = new Inicio();
+            inicio.setVisible(true);
+            this.setVisible(false);
+        }
+        
+    }//GEN-LAST:event_salirActionPerformed
+
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+
+        int fila = compras.getSelectedRow();
+        
+        if (fila >=0 ){
+            int opc = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere eliminar el producto?", "Eliminar producto", JOptionPane.YES_NO_OPTION);
+            if (opc == 0){
+                modelo.removeRow(fila);
+                Productos.suma = 0;
+                for (int i = 0; i < compras.getRowCount(); i++){ 
+                    Productos.suma += Float.parseFloat(compras.getValueAt(i, 4).toString());
+                }
+                total.setText("Total: " + Productos.suma);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Por favor, seleccione una fila.", "Sin selecccion", 0, new ImageIcon(getClass().getResource("/imagenes/advertencia.png")));
+        }
+    }//GEN-LAST:event_eliminarActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        
+        Compras compras = new Compras();
+        compras.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+
+        Registro registro = new Registro();
+        Registro.actualizar.setVisible(true);
+        Registro.registrar.setVisible(false);
+        Registro.login.setVisible(false);
+        
+        Conexion con;
+        Encriptar en;
+        Connection c;
+        ResultSet rs;
+        Statement st;
+        String sql = "SELECT * FROM registro WHERE id = "+Inicio_Secion.id+" ";
+        
+        try {
+            en = new Encriptar();
+            con = new Conexion();
+            c = con.getConexion();
+            st = c.createStatement();
+            rs = st.executeQuery(sql);
+            Registro.nombre.setText(rs.getString(2));
+            Registro.apellido.setText(rs.getString(3));
+            Registro.mail.setText(rs.getString(4));
+            Registro.telefono.setText(rs.getString(5));
+            Registro.contra1.setText(en.desencriptar(rs.getString(6)));
+            Registro.contra2.setText(en.desencriptar(rs.getString(6)));
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
+        
+        
+        
+        
+        registro.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     public static void main(String args[]) {
 
@@ -223,11 +362,17 @@ public class Compra_Venta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JTable compras;
+    private javax.swing.JButton eliminar;
     private javax.swing.JButton irCompra;
     private javax.swing.JButton irProductos;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable jTable1;
+    private javax.swing.JButton salir;
     public static javax.swing.JLabel total;
     // End of variables declaration//GEN-END:variables
 }
