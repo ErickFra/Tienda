@@ -1,10 +1,15 @@
 
 package tienda;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 public class Compra_Venta extends javax.swing.JFrame {
 
@@ -23,14 +28,14 @@ public class Compra_Venta extends javax.swing.JFrame {
         modelo.addColumn("CANTIDAD");
         modelo.addColumn("CARGO");
         compras.setModel(modelo);
-        
+        compras.setSelectionBackground(Color.green);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = /*new javax.swing.JPanel()*/new gradientPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         compras = new javax.swing.JTable();
         irProductos = new javax.swing.JButton();
@@ -61,6 +66,9 @@ public class Compra_Venta extends javax.swing.JFrame {
 
             }
         ));
+        compras.setFocusable(false);
+        compras.getTableHeader().setResizingAllowed(false);
+        compras.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(compras);
 
         irProductos.setFont(new java.awt.Font("Serif", 3, 18)); // NOI18N
@@ -111,23 +119,22 @@ public class Compra_Venta extends javax.swing.JFrame {
                 .addGap(160, 160, 160))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(irProductos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                .addComponent(irCompra)
-                .addGap(43, 43, 43)
-                .addComponent(eliminar)
-                .addGap(42, 42, 42)
-                .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(irProductos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                        .addComponent(irCompra)
+                        .addGap(43, 43, 43)
+                        .addComponent(eliminar)
+                        .addGap(42, 42, 42)
+                        .addComponent(salir, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(35, 35, 35))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(197, Short.MAX_VALUE)
+                .addContainerGap(185, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(irCompra)
                     .addComponent(irProductos)
@@ -263,8 +270,9 @@ public class Compra_Venta extends javax.swing.JFrame {
             //Inicio inicio = new Inicio();
             //inicio.setVisible(true);
             //this.setVisible(false);
-            
-            for (int k = 0; k < compras.getRowCount(); k++){
+             
+            int t = compras.getRowCount();
+            for (int k = 0; k < t; k++){
                 this.modelo.removeRow(0);
             }
             total.setText("");
@@ -279,7 +287,7 @@ public class Compra_Venta extends javax.swing.JFrame {
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
 
-        int opc = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres salir?", "Salir", JOptionPane.YES_NO_OPTION);
+        int opc = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres salir?", "Salir", JOptionPane.YES_NO_OPTION, 0, new ImageIcon(getClass().getResource("/imagenes/pensando.png")));
         if (opc == 0){
             Inicio inicio = new Inicio();
             inicio.setVisible(true);
@@ -293,7 +301,7 @@ public class Compra_Venta extends javax.swing.JFrame {
         int fila = compras.getSelectedRow();
         
         if (fila >=0 ){
-            int opc = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere eliminar el producto?", "Eliminar producto", JOptionPane.YES_NO_OPTION);
+            int opc = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere eliminar el producto?", "Eliminar producto", JOptionPane.YES_NO_OPTION, 0, new ImageIcon(getClass().getResource("/imagenes/pensando.png")));
             if (opc == 0){
                 modelo.removeRow(fila);
                 Productos.suma = 0;
@@ -319,6 +327,7 @@ public class Compra_Venta extends javax.swing.JFrame {
         Registro.actualizar.setVisible(true);
         Registro.registrar.setVisible(false);
         Registro.login.setVisible(false);
+        Registro.regresar.setVisible(false);
         
         Conexion con;
         Encriptar en;
@@ -344,10 +353,6 @@ public class Compra_Venta extends javax.swing.JFrame {
             System.out.println(ex);
         }
         
-        
-        
-        
-        
         registro.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
@@ -359,6 +364,21 @@ public class Compra_Venta extends javax.swing.JFrame {
                 new Compra_Venta().setVisible(true);
             }
         });
+    }
+    
+    class gradientPanel extends JPanel {
+        protected void paintComponent(Graphics g){
+            Graphics2D g2d = (Graphics2D) g;
+            int ancho = getWidth();
+            int alto = getHeight();
+            
+            Color color1 = new Color(234,153,153);
+            Color color2 = new Color(242,200,70);
+            GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto+400, color2);
+            //GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto, color2);
+            g2d.setPaint(gp);
+            g2d.fillRect(0, 0, ancho, alto);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

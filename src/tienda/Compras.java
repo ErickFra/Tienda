@@ -1,8 +1,13 @@
 
 package tienda;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.sql.*;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -14,12 +19,25 @@ public class Compras extends javax.swing.JFrame {
     DefaultTableModel modelo = new DefaultTableModel();
     public Compras() {
         initComponents();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setTitle("Cliente: " + Inicio_Secion.id);
+        this.setIconImage(new ImageIcon(getClass().getResource("/imagenes/compras.png")).getImage());
+        jLabel1.setText("Compras de '" + Inicio_Secion.Dnombre + " " + Inicio_Secion.Dapellido+ "' ");
         modelo.addColumn("Registro");
         modelo.addColumn("Total");
         modelo.addColumn("Fecha de compra");
         compras.setModel(modelo);
         
         total_compras();
+        
+        if (compras.getRowCount() != 0){
+            float tol = 0;
+            for (int i = 0; i < compras.getRowCount(); i++){
+                tol += Float.parseFloat(compras.getValueAt(i, 1).toString());
+            }
+            jLabel2.setText("Total a pagar: " + tol);
+        }else jLabel2.setText("No tienes compras");
     }
     
     public void total_compras(){
@@ -36,7 +54,7 @@ public class Compras extends javax.swing.JFrame {
             rs = st.executeQuery(sql);
             
             while (rs.next()){
-                filas[0] = String.valueOf(rs.getInt(2));
+                filas[0] = String.valueOf(rs.getInt(1));
                 filas[1] = String.valueOf(rs.getFloat(3));
                 filas[2] = rs.getString(4);
                 modelo.addRow(filas);
@@ -58,12 +76,19 @@ public class Compras extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = /*new javax.swing.JPanel()*/new gradientPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         compras = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        compras = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
         compras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -75,23 +100,44 @@ public class Compras extends javax.swing.JFrame {
 
             }
         ));
+        compras.setFocusable(false);
+        compras.getTableHeader().setResizingAllowed(false);
+        compras.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(compras);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 255, 51));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE))
+                        .addGap(0, 82, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(106, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,9 +190,26 @@ public class Compras extends javax.swing.JFrame {
             }
         });
     }
+    
+    class gradientPanel extends JPanel {
+        protected void paintComponent(Graphics g){
+            Graphics2D g2d = (Graphics2D) g;
+            int ancho = getWidth();
+            int alto = getHeight();
+            
+            Color color1 = new Color(234,28,13);
+            Color color2 = new Color(255,255,255);
+            GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto-ancho, color2);
+            //GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto, color2);
+            g2d.setPaint(gp);
+            g2d.fillRect(0, 0, ancho, alto);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable compras;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

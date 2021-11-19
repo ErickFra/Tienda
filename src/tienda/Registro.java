@@ -1,6 +1,10 @@
 
 package tienda;
 import com.sun.glass.events.KeyEvent;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.sql.*;
 import java.util.logging.Level;
@@ -9,6 +13,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class Registro extends javax.swing.JFrame {
 
@@ -31,7 +36,7 @@ public class Registro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = /*new javax.swing.JPanel()*/ new gradientPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -50,6 +55,7 @@ public class Registro extends javax.swing.JFrame {
         regresar = new javax.swing.JButton();
         mostrar = new javax.swing.JCheckBox();
         actualizar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Registro de clientes");
@@ -109,8 +115,20 @@ public class Registro extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Verdana", 3, 18)); // NOI18N
         jLabel6.setText("Contraseña: ");
 
+        contra1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                contra1KeyTyped(evt);
+            }
+        });
+
         jLabel7.setFont(new java.awt.Font("Verdana", 3, 18)); // NOI18N
         jLabel7.setText("Cofirmar: ");
+
+        contra2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                contra2KeyTyped(evt);
+            }
+        });
 
         login.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iniciar_sesion.png"))); // NOI18N
@@ -149,6 +167,8 @@ public class Registro extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -171,13 +191,14 @@ public class Registro extends javax.swing.JFrame {
                                 .addComponent(mostrar)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                    .addComponent(apellido)
-                                    .addComponent(mail)
-                                    .addComponent(telefono)
-                                    .addComponent(contra1)
-                                    .addComponent(contra2))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(nombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                    .addComponent(apellido, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(mail, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(telefono, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(contra1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(contra2, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(73, 73, 73)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(regresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -231,26 +252,24 @@ public class Registro extends javax.swing.JFrame {
                             .addComponent(contra2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(regresar)
-                        .addGap(35, 35, 35)
+                        .addGap(26, 26, 26)
                         .addComponent(actualizar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(mostrar)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 58, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -261,58 +280,56 @@ public class Registro extends javax.swing.JFrame {
         
         if (nombre.getText().length() != 0 && apellido.getText().length() != 0 && mail.getText().length() != 0 && telefono.getText().length() != 0 && contra1.getText().length() != 0 && contra2.getText().length() != 0){
             
-            if (contra1.getText().equals(contra2.getText())){
+            if (contra1.getText().length() >= 8 && contra2.getText().length() >= 8){
                 
-                con = new Conexion();
-                enc = new Encriptar();
-                int res = JOptionPane.showConfirmDialog(null, "¿Los datos son correctos?");
-            
-                if (res == 0){
+                if (contra1.getText().equals(contra2.getText())){
+                    con = new Conexion();
+                    enc = new Encriptar();
+                    int res = JOptionPane.showConfirmDialog(null, "¿Los datos son correctos?");
 
-                    String sql = "INSERT INTO registro (nombre, apellido, correo, telefono, password) VALUES (?, ?, ?, ?, ?)";
-                        
-                    Connection c;
-                    PreparedStatement ppt;
+                    if (res == 0){
 
-                    try {
-                        c = con.getConexion();
+                        String sql = "INSERT INTO registro (nombre, apellido, correo, telefono, password) VALUES (?, ?, ?, ?, ?)";
 
-                        ppt = c.prepareStatement(sql);
+                        Connection c;
+                        PreparedStatement ppt;
 
-                        ppt.setString(1, nombre.getText());
-                        ppt.setString(2, apellido.getText());
-                        ppt.setString(3, mail.getText());
-                        ppt.setString(4, telefono.getText());
-                        ppt.setString(5, enc.encriptar(contra1.getText()));
+                        try {
+                            c = con.getConexion();
 
-                        ppt.executeUpdate();
+                            ppt = c.prepareStatement(sql);
 
-                        JOptionPane.showMessageDialog(null, "Datos guardados correctamente", "Guardado...", 1, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
-                            
-                        login.setEnabled(true);
+                            ppt.setString(1, nombre.getText());
+                            ppt.setString(2, apellido.getText());
+                            ppt.setString(3, mail.getText());
+                            ppt.setString(4, telefono.getText());
+                            ppt.setString(5, enc.encriptar(contra1.getText()));
 
-                        nombre.setText(null);
-                        apellido.setText(null);
-                        mail.setText(null);
-                        telefono.setText(null);
-                        contra1.setText(null);
-                        contra2.setText(null);
+                            ppt.executeUpdate();
 
-                    } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "Datos guardados correctamente", "Guardado...", 1, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
 
+                            login.setEnabled(true);
+
+                            nombre.setText(null);
+                            apellido.setText(null);
+                            mail.setText(null);
+                            telefono.setText(null);
+                            contra1.setText(null);
+                            contra2.setText(null);
+
+                        } catch (Exception e) {
                             JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
                         }
+                    }
+                }else{
+                    
+                    JOptionPane.showMessageDialog(null, "Las contraseñas no son iguales", "Error", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
+                    contra1.setText(null);
+                    contra2.setText(null);
                 }
-            }else{
-                JOptionPane.showMessageDialog(null, "Las contraseñas no son iguales", "Error", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
-                /*nombre.setText(null);
-                apellido.setText(null);
-                mail.setText(null);
-                telefono.setText(null);*/
-                contra1.setText(null);
-                contra2.setText(null);
-            }
-            
+            }else JOptionPane.showMessageDialog(null, "Contraseña Minimo de 8 caracteres", "Contraseña debil", 0, new ImageIcon(getClass().getResource("/imagenes/contraDebil.png")));
+
         }else{
             //JOptionPane.showMessageDialog(null, "Te falta llenar algun campo", "Error", 2);
             JOptionPane.showMessageDialog(null, "Por favor, llena todo los campos.", "Incompleto", 0, new ImageIcon(getClass().getResource("/imagenes/incompleto.png")));
@@ -348,8 +365,15 @@ public class Registro extends javax.swing.JFrame {
 
         if (!Character.isLetter(evt.getKeyChar()) && !(evt.getKeyChar() == KeyEvent.VK_SPACE) && !(evt.getKeyChar() == KeyEvent.VK_BACKSPACE) && !(evt.getKeyChar() == KeyEvent.VK_ENTER)){
             JOptionPane.showMessageDialog(null, "Por favor, solo letras", "Error...", 0, new ImageIcon(getClass().getResource("/imagenes/letras.png")));
-            System.out.println(KeyEvent.VK_DELETE);
+            //System.out.println(KeyEvent.VK_DELETE);
             evt.consume();
+        }
+        
+        if (nombre.getText().length() > 19){
+            jLabel8.setText("Nombre solo 20 caracteres");
+            evt.consume();
+        }else {
+            jLabel8.setText(null);
         }
     }//GEN-LAST:event_nombreKeyTyped
 
@@ -358,6 +382,13 @@ public class Registro extends javax.swing.JFrame {
         if (!Character.isLetter(evt.getKeyChar()) && !(evt.getKeyChar() == KeyEvent.VK_SPACE) && !(evt.getKeyChar() == KeyEvent.VK_BACKSPACE) && !(evt.getKeyChar() == KeyEvent.VK_ENTER)){
             JOptionPane.showMessageDialog(null, "Por favor, solo letras", "Error...", 0, new ImageIcon(getClass().getResource("/imagenes/letras.png")));
             evt.consume();
+        }
+        
+        if (apellido.getText().length() > 24){
+            jLabel8.setText("Apellido solo 25 caracteres");
+            evt.consume();
+        }else {
+            jLabel8.setText(null);
         }
     }//GEN-LAST:event_apellidoKeyTyped
 
@@ -369,6 +400,11 @@ public class Registro extends javax.swing.JFrame {
             evt.consume();
         }
         
+        if (telefono.getText().length() > 9){
+            jLabel8.setText("Telefono solo 10 numeros");
+            evt.consume();
+        }else jLabel8.setText(null);
+        
     }//GEN-LAST:event_telefonoKeyTyped
 
     private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
@@ -378,56 +414,78 @@ public class Registro extends javax.swing.JFrame {
             
             Conexion con;
             Encriptar enc;
-            if (contra1.getText().equals(contra2.getText())){
-                
-                con = new Conexion();
-                enc = new Encriptar();
-                int res = JOptionPane.showConfirmDialog(null, "¿Los datos son correctos?");
-            
-                if (res == 0){
-                    String sql = "UPDATE registro SET nombre = '"+nombre.getText()+"', apellido = '"+apellido.getText()+"', correo = '"+mail.getText()+"', telefono = '"+telefono.getText()+"', password = '"+enc.encriptar(contra1.getText())+"' WHERE id = "+Inicio_Secion.id+" ";
+            if (contra1.getText().length() >= 8 && contra2.getText().length() >= 8){
+                if (contra1.getText().equals(contra2.getText())){
                     
-                    Connection c;
-                    PreparedStatement pps;
+                    con = new Conexion();
+                    enc = new Encriptar();
+                    int res = JOptionPane.showConfirmDialog(null, "¿Los datos son correctos?", "Actualizacion", JOptionPane.YES_NO_OPTION, 0, new ImageIcon(getClass().getResource("/imagenes/pensando.png")));
 
-                    try {
-                        c = con.getConexion();
-                        pps = c.prepareStatement(sql);
-                        pps.executeUpdate();
-                        JOptionPane.showMessageDialog(null, "Datos Actualizados", "Actualizacion", 0, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
-                        login.setVisible(true);
-                        login.setEnabled(true);
+                    if (res == 0){
+                        Connection c;
+                        PreparedStatement pps;
+                        String sql = "UPDATE registro SET nombre = '"+nombre.getText()+"', apellido = '"+apellido.getText()+"', correo = '"+mail.getText()+"', telefono = '"+telefono.getText()+"', password = '"+enc.encriptar(contra1.getText())+"' WHERE id = "+Inicio_Secion.id+"";
+
+                        try {
+                            c = con.getConexion();
+                            pps = c.prepareStatement(sql);
+                            pps.executeUpdate();
+                            JOptionPane.showMessageDialog(null, "Datos Actualizados", "Actualizacion", 0, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
+                            login.setVisible(true);
+                            login.setEnabled(true);
+
+                            login.setEnabled(true);
+
+                            nombre.setText(null);
+                            apellido.setText(null);
+                            mail.setText(null);
+                            telefono.setText(null);
+                            contra1.setText(null);
+                            contra2.setText(null);
                             
-                        login.setEnabled(true);
-
-                        nombre.setText(null);
-                        apellido.setText(null);
-                        mail.setText(null);
-                        telefono.setText(null);
-                        contra1.setText(null);
-                        contra2.setText(null);
-
-                    } catch (Exception e) {
-                        
-                        JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
+                            c.close();
+                            actualizar.setVisible(false);
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
+                        }
                     }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Las contraseñas no son iguales", "Error", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
+                    /*nombre.setText(null);
+                    apellido.setText(null);
+                    mail.setText(null);
+                    telefono.setText(null);*/
+                    contra1.setText(null);
+                    contra2.setText(null);
                 }
-            }else{
-                JOptionPane.showMessageDialog(null, "Las contraseñas no son iguales", "Error", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
-                /*nombre.setText(null);
-                apellido.setText(null);
-                mail.setText(null);
-                telefono.setText(null);*/
-                contra1.setText(null);
-                contra2.setText(null);
-            }
-            
+            }else JOptionPane.showMessageDialog(null, "Contraseña Minimo de 8 caracteres", "Contraseña debil", 0, new ImageIcon(getClass().getResource("/imagenes/contraDebil.png")));
         }else{
             //JOptionPane.showMessageDialog(null, "Te falta llenar algun campo", "Error", 2);
             JOptionPane.showMessageDialog(null, "Por favor, llena todo los campos.", "Incompleto", 0, new ImageIcon(getClass().getResource("/imagenes/incompleto.png")));
         }
+        
     
     }//GEN-LAST:event_actualizarActionPerformed
+
+    private void contra1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contra1KeyTyped
+
+        if (contra1.getText().length() > 15){
+            jLabel8.setText("Contraseña solo 16 caracteres");
+            evt.consume();
+        }else {
+            jLabel8.setText(null);
+        }
+    }//GEN-LAST:event_contra1KeyTyped
+
+    private void contra2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contra2KeyTyped
+
+        if (contra2.getText().length() > 15){
+            jLabel8.setText("Contraseña solo 16 cacteres");
+            evt.consume();
+        }else {
+            jLabel8.setText(null);
+        }
+    }//GEN-LAST:event_contra2KeyTyped
 
     public static void main(String args[]) {
 
@@ -436,6 +494,21 @@ public class Registro extends javax.swing.JFrame {
                 new Registro().setVisible(true);
             }
         });
+    }
+    
+    class gradientPanel extends JPanel {
+        protected void paintComponent(Graphics g){
+            Graphics2D g2d = (Graphics2D) g;
+            int ancho = getWidth();
+            int alto = getHeight();
+            
+            Color color1 = new Color(105,170,219);
+            Color color2 = new Color(246,104,94);
+            GradientPaint gp = new GradientPaint(0, 0, color1, 180, ancho, color2);
+            //GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto, color2);
+            g2d.setPaint(gp);
+            g2d.fillRect(0, 0, ancho, alto);
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -450,6 +523,7 @@ public class Registro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     public static javax.swing.JButton login;
     public static javax.swing.JTextField mail;

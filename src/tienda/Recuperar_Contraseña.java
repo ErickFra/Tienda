@@ -1,11 +1,16 @@
 
 package tienda;
 import com.sun.glass.events.KeyEvent;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 public class Recuperar_Contraseña extends javax.swing.JFrame {
 
     /**
@@ -27,7 +32,7 @@ public class Recuperar_Contraseña extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = /*new javax.swing.JPanel()*/new gradientPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -241,6 +246,21 @@ public class Recuperar_Contraseña extends javax.swing.JFrame {
                 new Recuperar_Contraseña().setVisible(true);
             }
         });
+    }
+    
+    class gradientPanel extends JPanel {
+        protected void paintComponent(Graphics g){
+            Graphics2D g2d = (Graphics2D) g;
+            int ancho = getWidth();
+            int alto = getHeight();
+            
+            Color color1 = new Color(150,111,187);
+            Color color2 = new Color(255,255,255);
+            GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto-ancho, color2);
+            //GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto, color2);
+            g2d.setPaint(gp);
+            g2d.fillRect(0, 0, ancho, alto);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
