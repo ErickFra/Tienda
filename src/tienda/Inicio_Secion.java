@@ -161,7 +161,6 @@ public class Inicio_Secion extends javax.swing.JFrame {
             ResultSet rs, rs2;
             con = new Conexion();
             enc = new Encriptar();
-            //String sql = "SELECT * FROM registro";
             String sql = "SELECT * FROM registro";
             String sql2 = "SELECT count(*) as filas FROM registro ";
             String [] fila = new String [2];
@@ -179,8 +178,7 @@ public class Inicio_Secion extends javax.swing.JFrame {
                         id = rs.getInt(1);
                         Dnombre = rs.getString(2);
                         Dapellido = rs.getString(3);
-                        //JOptionPane.showMessageDialog(null, "Dato encontrado...", "ID de cliente: " + rs.getInt(1), 1);
-                        JOptionPane.showMessageDialog(null, "Dato encontrado...", "ID de cliente: " + rs.getInt(1), 1, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
+                        JOptionPane.showMessageDialog(null, "Cliente encontrado...", "ID de cliente: " + rs.getInt(1), 1, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
                         Compra_Venta venta = new Compra_Venta();
                         venta.setVisible(true);
                         this.setVisible(false);
@@ -197,7 +195,6 @@ public class Inicio_Secion extends javax.swing.JFrame {
             }
             
         }else{
-            //JOptionPane.showMessageDialog(null, "Por favor, llena todo los campos.", "Imcompleto", 2);
             JOptionPane.showMessageDialog(null, "Por favor, llena todo los campos.", "Incompleto", 0, new ImageIcon(getClass().getResource("/imagenes/incompleto.png")));
         }
         
@@ -274,7 +271,6 @@ public class Inicio_Secion extends javax.swing.JFrame {
             Color color1 = new Color(255,255,255);
             Color color2 = new Color(106,50,159);
             GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto, color2);
-            //GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto, color2);
             g2d.setPaint(gp);
             g2d.fillRect(0, 0, ancho, alto);
         }

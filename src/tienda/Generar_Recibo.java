@@ -48,10 +48,8 @@ public class Generar_Recibo {
             c.close();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error al generar el archivo...", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
-            //System.out.println("Error al generar el archiovo...\n" + ex);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Error SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
-            //Logger.getLogger(Generar_Recibo.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

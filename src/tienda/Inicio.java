@@ -33,10 +33,9 @@ public class Inicio extends javax.swing.JFrame {
             int ancho = getWidth();
             int alto = getHeight();
             
-            Color color1 = new Color(0, 102, 255); // Azul
-            Color color2 = new Color(255, 51, 255); // Rosa
+            Color color1 = new Color(0, 102, 255);
+            Color color2 = new Color(255, 51, 255);
             GradientPaint gp = new GradientPaint(0, 0, color1, 180, ancho-alto, color2);
-            //GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto, color2);
             g2d.setPaint(gp);
             g2d.fillRect(0, 0, ancho, alto);
         }
@@ -240,7 +239,6 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_ver_proveedoresActionPerformed
 
     private void registrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registrarMouseEntered
-
 
         registrar.setBackground(Color.blue);
         registrar.setForeground(Color.pink);

@@ -182,7 +182,7 @@ public class Recuperar_Contraseña extends javax.swing.JFrame {
                 
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
-                //JOptionPane.showMessageDialog(null, ex, "Error SQL", 0);
+                
             }
         }else{
             JOptionPane.showMessageDialog(null, "Por favor, llena todo los campos.", "Incompleto", 0, new ImageIcon(getClass().getResource("/imagenes/incompleto.png")));
@@ -257,7 +257,6 @@ public class Recuperar_Contraseña extends javax.swing.JFrame {
             Color color1 = new Color(150,111,187);
             Color color2 = new Color(255,255,255);
             GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto-ancho, color2);
-            //GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto, color2);
             g2d.setPaint(gp);
             g2d.fillRect(0, 0, ancho, alto);
         }

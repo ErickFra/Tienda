@@ -29,6 +29,9 @@ public class Compra_Venta extends javax.swing.JFrame {
         modelo.addColumn("CARGO");
         compras.setModel(modelo);
         compras.setSelectionBackground(Color.green);
+        
+        irCompra.setEnabled(false); 
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -117,7 +120,7 @@ public class Compra_Venta extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(total)
                 .addGap(160, 160, 160))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
@@ -197,7 +200,7 @@ public class Compra_Venta extends javax.swing.JFrame {
 
     private void irCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_irCompraActionPerformed
 
-        int comprobacion = JOptionPane.showConfirmDialog(null, "¿Realiazar compra?", "Confirmacion", JOptionPane.YES_NO_OPTION, 3);
+        int comprobacion = JOptionPane.showConfirmDialog(null, "¿Realiazar compra?", "Confirmacion", JOptionPane.YES_NO_OPTION, 3, new ImageIcon(getClass().getResource("/imagenes/pensando.png")));
         
         if (comprobacion == 0){
             
@@ -242,7 +245,6 @@ public class Compra_Venta extends javax.swing.JFrame {
                 String mail = rs.getString(4);
 
                 correo = new Correo(mail, "Tus productos estan listo.\nPor favor, pase a la caja.\nSerian: $" + Productos.suma, "Compra de productos");
-                //correo.enviar();
                 correo.enviar("documento"+Inicio_Secion.id+".txt");
                 
                 rs.close();
@@ -267,9 +269,7 @@ public class Compra_Venta extends javax.swing.JFrame {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e, "Error al actulizar productos", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
         }
-            //Inicio inicio = new Inicio();
-            //inicio.setVisible(true);
-            //this.setVisible(false);
+
              
             int t = compras.getRowCount();
             for (int k = 0; k < t; k++){
@@ -278,8 +278,6 @@ public class Compra_Venta extends javax.swing.JFrame {
             total.setText("");
             recibo.eliminarArchivo();
         
-        }else{
-            total.setText(null);
         }
         
         
@@ -309,6 +307,7 @@ public class Compra_Venta extends javax.swing.JFrame {
                     Productos.suma += Float.parseFloat(compras.getValueAt(i, 4).toString());
                 }
                 total.setText("Total: " + Productos.suma);
+                if (compras.getRowCount() == 0) irCompra.setEnabled(false); //else irCompra.setEnabled(true);
             }
         }else{
             JOptionPane.showMessageDialog(null, "Por favor, seleccione una fila.", "Sin selecccion", 0, new ImageIcon(getClass().getResource("/imagenes/advertencia.png")));
@@ -384,7 +383,7 @@ public class Compra_Venta extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JTable compras;
     private javax.swing.JButton eliminar;
-    private javax.swing.JButton irCompra;
+    public static javax.swing.JButton irCompra;
     private javax.swing.JButton irProductos;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;

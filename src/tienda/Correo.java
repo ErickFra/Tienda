@@ -41,7 +41,7 @@ public class Correo {
             propiedad.put("mail.smtp.auth", true);
             propiedad.put("mail.smtp.port", 587);
             propiedad.put("mail.smtp.ssl.protocols", "TLSv1.2");
-            propiedad.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+            propiedad.put("mail.smtp.ssl.trust", "smtp.gmail.com"); // Comando si tienes el antivirus "Avast".
 
             Session sesion = Session.getDefaultInstance(propiedad);
             
@@ -62,20 +62,15 @@ public class Correo {
             tranporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
             
             tranporte.close();
-            JOptionPane.showMessageDialog(null, "Correo enviado", "Confirmado", 0, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
-            //JOptionPane.showMessageDialog(null, "Correo enviado", "Confirmado", 1);
+            JOptionPane.showMessageDialog(null, "Correo enviado", "Confirmado", 0, new ImageIcon(getClass().getResource("/imagenes/correo.png")));
+            
             
         } catch (AddressException ex) {
             System.out.println("Error 1".toUpperCase());
-            //JOptionPane.showMessageDialog(null, ex, "1", 1);
             JOptionPane.showMessageDialog(null, ex, "AddressException", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
-            //Logger.getLogger(Correo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MessagingException ex) {
             System.out.println("Error 2".toUpperCase());
-            //JOptionPane.showMessageDialog(null, ex, "2", 1);
-            System.out.println(ex);
             JOptionPane.showMessageDialog(null, ex, "MessagingException", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
-            //Logger.getLogger(Correo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

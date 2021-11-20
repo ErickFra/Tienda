@@ -53,16 +53,9 @@ public class Proveedores extends javax.swing.JFrame {
                 filas[3] = rs.getString(4);
                 modelo.addRow(filas);
             }
-            /*for (int i = 0; i < productos.getRowCount(); i++){
-                if (Integer.parseInt(productos.getValueAt(i, 2).toString()) == 0){
-                    modelo.removeRow(i);
-                }
-            }*/
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
-            System.out.println(e);
-            //JOptionPane.showMessageDialog(null, e, "Error", 2, new ImageIcon(getClass().getResource("/imagenes/error.png")));
-            
         }
     }
     
@@ -156,7 +149,6 @@ public class Proveedores extends javax.swing.JFrame {
             Color color1 = new Color(52, 143, 80);
             Color color2 = new Color(86, 180, 211);
             GradientPaint gp = new GradientPaint(0, 0, color1, 180, ancho-alto, color2);
-            //GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto, color2);
             g2d.setPaint(gp);
             g2d.fillRect(0, 0, ancho, alto);
         }

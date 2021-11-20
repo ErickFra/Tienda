@@ -331,7 +331,7 @@ public class Registro extends javax.swing.JFrame {
             }else JOptionPane.showMessageDialog(null, "Contraseña Minimo de 8 caracteres", "Contraseña debil", 0, new ImageIcon(getClass().getResource("/imagenes/contraDebil.png")));
 
         }else{
-            //JOptionPane.showMessageDialog(null, "Te falta llenar algun campo", "Error", 2);
+            
             JOptionPane.showMessageDialog(null, "Por favor, llena todo los campos.", "Incompleto", 0, new ImageIcon(getClass().getResource("/imagenes/incompleto.png")));
         }
     }//GEN-LAST:event_registrarActionPerformed
@@ -365,7 +365,6 @@ public class Registro extends javax.swing.JFrame {
 
         if (!Character.isLetter(evt.getKeyChar()) && !(evt.getKeyChar() == KeyEvent.VK_SPACE) && !(evt.getKeyChar() == KeyEvent.VK_BACKSPACE) && !(evt.getKeyChar() == KeyEvent.VK_ENTER)){
             JOptionPane.showMessageDialog(null, "Por favor, solo letras", "Error...", 0, new ImageIcon(getClass().getResource("/imagenes/letras.png")));
-            //System.out.println(KeyEvent.VK_DELETE);
             evt.consume();
         }
         
@@ -451,16 +450,11 @@ public class Registro extends javax.swing.JFrame {
                     }
                 }else{
                     JOptionPane.showMessageDialog(null, "Las contraseñas no son iguales", "Error", 0, new ImageIcon(getClass().getResource("/imagenes/error.png")));
-                    /*nombre.setText(null);
-                    apellido.setText(null);
-                    mail.setText(null);
-                    telefono.setText(null);*/
                     contra1.setText(null);
                     contra2.setText(null);
                 }
             }else JOptionPane.showMessageDialog(null, "Contraseña Minimo de 8 caracteres", "Contraseña debil", 0, new ImageIcon(getClass().getResource("/imagenes/contraDebil.png")));
         }else{
-            //JOptionPane.showMessageDialog(null, "Te falta llenar algun campo", "Error", 2);
             JOptionPane.showMessageDialog(null, "Por favor, llena todo los campos.", "Incompleto", 0, new ImageIcon(getClass().getResource("/imagenes/incompleto.png")));
         }
         
@@ -505,7 +499,6 @@ public class Registro extends javax.swing.JFrame {
             Color color1 = new Color(105,170,219);
             Color color2 = new Color(246,104,94);
             GradientPaint gp = new GradientPaint(0, 0, color1, 180, ancho, color2);
-            //GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto, color2);
             g2d.setPaint(gp);
             g2d.fillRect(0, 0, ancho, alto);
         }

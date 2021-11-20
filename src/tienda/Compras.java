@@ -200,7 +200,6 @@ public class Compras extends javax.swing.JFrame {
             Color color1 = new Color(234,28,13);
             Color color2 = new Color(255,255,255);
             GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto-ancho, color2);
-            //GradientPaint gp = new GradientPaint(0, 0, color1, 180, alto, color2);
             g2d.setPaint(gp);
             g2d.fillRect(0, 0, ancho, alto);
         }
