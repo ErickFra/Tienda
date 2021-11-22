@@ -62,7 +62,7 @@ public class Correo {
             tranporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
             
             tranporte.close();
-            JOptionPane.showMessageDialog(null, "Correo enviado", "Confirmado", 0, new ImageIcon(getClass().getResource("/imagenes/correo.png")));
+            JOptionPane.showMessageDialog(null, "Correo Enviado Con Exito", "Confirmacion", 0, new ImageIcon(getClass().getResource("/imagenes/correo.png")));
             
             
         } catch (AddressException ex) {

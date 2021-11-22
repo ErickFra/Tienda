@@ -317,6 +317,8 @@ public class Registro extends javax.swing.JFrame {
                             telefono.setText(null);
                             contra1.setText(null);
                             contra2.setText(null);
+                            
+                            c.close();
 
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
@@ -408,11 +410,10 @@ public class Registro extends javax.swing.JFrame {
 
     private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
 
-        
+        Conexion con;
+        Encriptar enc;
         if (nombre.getText().length() != 0 && apellido.getText().length() != 0 && mail.getText().length() != 0 && telefono.getText().length() != 0 && contra1.getText().length() != 0 && contra2.getText().length() != 0){
             
-            Conexion con;
-            Encriptar enc;
             if (contra1.getText().length() >= 8 && contra2.getText().length() >= 8){
                 if (contra1.getText().equals(contra2.getText())){
                     
@@ -443,8 +444,13 @@ public class Registro extends javax.swing.JFrame {
                             contra2.setText(null);
                             
                             c.close();
-                            actualizar.setVisible(false);
+                            
+                            Inicio_Secion inicio = new Inicio_Secion();
+                            inicio.setVisible(true);
+                            this.setVisible(false);
+                            
                         } catch (Exception e) {
+                            System.out.println(e);
                             JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
                         }
                     }

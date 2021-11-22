@@ -197,7 +197,8 @@ public class Productos extends javax.swing.JFrame {
                 rs = st.executeQuery(sql);
 
                 int cantidad;
-                String cantidadS = JOptionPane.showInputDialog(null, "Cuando productos quieres: ", "Cantidad", 1);
+                String cantidadS = (String) JOptionPane.showInputDialog(null, "Cuantos le gustaria ordenar:", "Cantidad de productos", JOptionPane.QUESTION_MESSAGE, new ImageIcon(getClass().getResource("/imagenes/pensando.png")), null, "Productos");
+                
                 
                 try {
                     cantidad = Integer.parseInt(cantidadS);
