@@ -450,7 +450,6 @@ public class Registro extends javax.swing.JFrame {
                             this.setVisible(false);
                             
                         } catch (Exception e) {
-                            System.out.println(e);
                             JOptionPane.showMessageDialog(null, e, "Error en instruccion SQL", 0, new ImageIcon(getClass().getResource("/imagenes/errorSQL.png")));
                         }
                     }

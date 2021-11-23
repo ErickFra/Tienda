@@ -291,6 +291,7 @@ public class Compra_Venta extends javax.swing.JFrame {
                 this.modelo.removeRow(0);
             }
             total.setText("");
+            irCompra.setEnabled(false);
             recibo.eliminarArchivo();
         
         }
@@ -325,7 +326,7 @@ public class Compra_Venta extends javax.swing.JFrame {
                 if (compras.getRowCount() == 0) irCompra.setEnabled(false); //else irCompra.setEnabled(true);
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione una fila.", "Sin selecccion", 0, new ImageIcon(getClass().getResource("/imagenes/advertencia.png")));
+            JOptionPane.showMessageDialog(null, "Por favor, seleccione el producto.", "Sin selecccion", 0, new ImageIcon(getClass().getResource("/imagenes/advertencia.png")));
         }
     }//GEN-LAST:event_eliminarActionPerformed
 

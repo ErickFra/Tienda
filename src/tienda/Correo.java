@@ -119,7 +119,8 @@ public class Correo {
             tranporte.close();
             
             //JOptionPane.showMessageDialog(null, "Correo enviado", "Confirmado", 1);
-            JOptionPane.showMessageDialog(null, "Correo enviado", "Confirmado", 0, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
+            //JOptionPane.showMessageDialog(null, "Correo enviado", "Confirmado", 0, new ImageIcon(getClass().getResource("/imagenes/ok.png")));
+            JOptionPane.showMessageDialog(null, "Correo Enviado Con Exito", "Confirmacion", 0, new ImageIcon(getClass().getResource("/imagenes/correo.png")));
             
         } catch (AddressException ex) {
             System.out.println("Error 1".toUpperCase());

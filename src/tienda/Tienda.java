@@ -1,6 +1,5 @@
 
 package tienda;
-import javax.swing.JOptionPane;
 public class Tienda {
 
     public static void main(String[] args) {

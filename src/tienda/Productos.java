@@ -232,7 +232,7 @@ public class Productos extends javax.swing.JFrame {
             
         }else{
             
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione una fila.", "Sin selecccion", 0, new ImageIcon(getClass().getResource("/imagenes/advertencia.png")));
+            JOptionPane.showMessageDialog(null, "Por favor, seleccione un producto.", "Sin selecccion", 0, new ImageIcon(getClass().getResource("/imagenes/advertencia.png")));
             
         }
         suma = 0;
